@@ -22,26 +22,26 @@ function generateSimilarObject(photoIndex) {
   const checkoutTimeId = getRandomInt(0, times.length - 1);
 
   const features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
-  const featuresEndIndex = getRandomInt(1, features.length - 1);
+  const featuresEndIndex = getRandomInt(0, features.length - 1);
 
   const photos = [
     "http://o0.github.io/assets/images/tokyo/hotel1.jpg",
     "http://o0.github.io/assets/images/tokyo/hotel2.jpg",
     "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
   ];
-  const photoEndIndex = getRandomInt(1, photos.length - 1);
+  const photoEndIndex = getRandomInt(0, photos.length - 1);
 
-  const returnValue = {
+    return  {
     "author": {
       "avatar": "img/avatars/user0" + photoId + ".png"
     },
     "offer": {
       "title": "Кексодом", // строка, заголовок предложения
       "address": locationX + ", " + locationY, // строка, адрес предложения. Для простоты пусть пока представляет собой запись вида "{{location.x}}, {{location.y}}", например, "600, 350"
-      "price": 0, // число, стоимость
+      "price": getRandomInt(1000, 50000), // число, стоимость
       "type": offerType[offerTypeId], // строка с одним из четырёх фиксированных значений: palace, flat, house или bungalow
-      "rooms": 8, // число, количество комнат
-      "guests": 8, // число, количество гостей, которое можно разместить
+      "rooms": getRandomInt(1, 8), // число, количество комнат
+      "guests": getRandomInt(1, 16), // число, количество гостей, которое можно разместить
       "checkin": times[checkinTimeId], // строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00,
       "checkout": times[checkoutTimeId], // строка с одним из трёх фиксированных значений: 12:00, 13:00 или 14:00
       "features": features.slice(0, featuresEndIndex), // массив строк случайной длины из ниже предложенных: "wifi", "dishwasher", "parking", "washer", "elevator", "conditioner",
@@ -53,8 +53,6 @@ function generateSimilarObject(photoIndex) {
       "y": locationY // случайное число, координата y метки на карте от 130 до 630.
     }
   };
-
-  return returnValue;
 }
 
 
@@ -68,13 +66,14 @@ function generateSimilarArray() {
 }
 
 
+
+const mapPins = document.querySelector('.map__pins');
+const template = document.querySelector('#pin').content.querySelector('button');
+
 function fillPins(inputSimilarArray) {
 
-  let mapPins = document.querySelector('.map__pins');
+  const fragment = document.createDocumentFragment();
 
-  let fragment = document.createDocumentFragment();
-
-  const template = document.querySelector('#pin').content.querySelector('button');
   const PinShiftTop = template.children[0]['height'];
   const PinShiftLeft = template.children[0]['width'] / 2;
 
@@ -82,8 +81,7 @@ function fillPins(inputSimilarArray) {
 
     const similarObject = inputSimilarArray[i];
 
-    let clone = template.cloneNode(true);
-
+    const clone = template.cloneNode(true);
     const styleLeft = similarObject['location']['x'] + PinShiftLeft;
     const styleTop = similarObject['location']['y'] + PinShiftTop;
     clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
@@ -93,13 +91,29 @@ function fillPins(inputSimilarArray) {
 
     fragment.appendChild(clone);
   }
-
   mapPins.appendChild(fragment);
-
 }
 
-var userDialog = document.querySelector('.map');
-userDialog.classList.remove('map--faded');
+
+// ??
+// function createPin (mapPins, template, fragment) {
+//   let clone = template.cloneNode(true);
+
+//     const styleLeft = similarObject['location']['x'] + PinShiftLeft;
+//     const styleTop = similarObject['location']['y'] + PinShiftTop;
+//     clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
+
+//     clone.children[0].src = similarObject['author']['avatar'];
+//     clone.children[0].alt = similarObject['offer']['title'];
+
+//     fragment.appendChild(clone);
+// }
+
+
+
+
+const mapActive = document.querySelector('.map');
+mapActive.classList.remove('map--faded');
 
 
 const similarArray = generateSimilarArray();
