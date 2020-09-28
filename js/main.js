@@ -74,40 +74,31 @@ function fillPins(inputSimilarArray) {
 
   const fragment = document.createDocumentFragment();
 
-  const PinShiftTop = template.children[0]['height'];
-  const PinShiftLeft = template.children[0]['width'] / 2;
+  // const PinShiftTop = template.children[0]['height'];
+  // const PinShiftLeft = template.children[0]['width'] / 2;
 
   for (let i = 0; i < inputSimilarArray.length; i++) {
 
-    const similarObject = inputSimilarArray[i];
-
-    const clone = template.cloneNode(true);
-    const styleLeft = similarObject['location']['x'] + PinShiftLeft;
-    const styleTop = similarObject['location']['y'] + PinShiftTop;
-    clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
-
-    clone.children[0].src = similarObject['author']['avatar'];
-    clone.children[0].alt = similarObject['offer']['title'];
-
-    fragment.appendChild(clone);
+        const pinElement = createPin(inputSimilarArray[i]);
+        fragment.appendChild(pinElement);
+        const clone = template.cloneNode(true);
   }
-  mapPins.appendChild(fragment);
+      mapPins.appendChild(fragment);
+    }
+
+
+function createPin (obj) {
+  let clone = template.cloneNode(true);
+  clone.style.left = obj.location.x + 'px';
+  clone.style.top = obj.location.y + 'px';
+  clone.querySelector('img').src = obj['author']['avatar'];
+  clone.querySelector('img').alt = obj['offer']['title'];
+    // const styleLeft = obj['location']['x'] + PinShiftLeft;
+    // const styleTop = obj['location']['y'] + PinShiftTop;
+  //   clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
+    // fragment.appendChild(clone);
+  return clone;
 }
-
-
-// ??
-// function createPin (mapPins, template, fragment) {
-//   let clone = template.cloneNode(true);
-
-//     const styleLeft = similarObject['location']['x'] + PinShiftLeft;
-//     const styleTop = similarObject['location']['y'] + PinShiftTop;
-//     clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
-
-//     clone.children[0].src = similarObject['author']['avatar'];
-//     clone.children[0].alt = similarObject['offer']['title'];
-
-//     fragment.appendChild(clone);
-// }
 
 
 
