@@ -31,7 +31,7 @@ function generateSimilarObject(photoIndex) {
   ];
   const photoEndIndex = getRandomInt(0, photos.length - 1);
 
-    return  {
+  return {
     "author": {
       "avatar": "img/avatars/user0" + photoId + ".png"
     },
@@ -65,8 +65,6 @@ function generateSimilarArray() {
   return returnArray;
 }
 
-
-
 const mapPins = document.querySelector('.map__pins');
 const template = document.querySelector('#pin').content.querySelector('button');
 
@@ -74,34 +72,22 @@ function fillPins(inputSimilarArray) {
 
   const fragment = document.createDocumentFragment();
 
-  // const PinShiftTop = template.children[0]['height'];
-  // const PinShiftLeft = template.children[0]['width'] / 2;
-
   for (let i = 0; i < inputSimilarArray.length; i++) {
 
-        const pinElement = createPin(inputSimilarArray[i]);
-        fragment.appendChild(pinElement);
-        const clone = template.cloneNode(true);
+    const pinElement = createPin(inputSimilarArray[i]);
+    fragment.appendChild(pinElement);
   }
-      mapPins.appendChild(fragment);
-    }
+  mapPins.appendChild(fragment);
+}
 
-
-function createPin (obj) {
+function createPin(obj) {
   let clone = template.cloneNode(true);
   clone.style.left = obj.location.x + 'px';
   clone.style.top = obj.location.y + 'px';
-  clone.querySelector('img').src = obj['author']['avatar'];
-  clone.querySelector('img').alt = obj['offer']['title'];
-    // const styleLeft = obj['location']['x'] + PinShiftLeft;
-    // const styleTop = obj['location']['y'] + PinShiftTop;
-  //   clone.style = 'left: ' + styleLeft + 'px; top: ' + styleTop + 'px;';
-    // fragment.appendChild(clone);
+  clone.querySelector('img').src = obj.author.avatar;
+  clone.querySelector('img').alt = obj.offer.title;
   return clone;
 }
-
-
-
 
 const mapActive = document.querySelector('.map');
 mapActive.classList.remove('map--faded');
