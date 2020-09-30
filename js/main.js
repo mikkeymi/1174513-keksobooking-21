@@ -98,23 +98,62 @@ mapActive.classList.remove('map--faded');
 const similarArray = generateSimilarArray();
 fillPins(similarArray);
 
-
-// // заполнить данными шаблон
+const map = document.querySelector('.map');
+const mapFilter = document.querySelector('.map__filters-container');
 const templateCard = document.querySelector('#card').content.querySelector('article');
+//наполнение карточки
+function createCard(data) {
+  let clone = templateCard.cloneNode(true);
+  clone.querySelector('.popup__avatar').src.textContent = data.author.avatar;
+  clone.querySelector('.popup__title').textContent = data.offer.title;
+  clone.querySelector('.popup__text--address').textContent = data.offer.address;
+  clone.querySelector('popup__text--price').textContent = data.offer.price + '₽/ночь.';
+  clone.querySelector('.popup__type').textContent = typeToText(similarArray[data.offer.type]); //?
+  clone.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + 'гостей';
+  clone.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
+  clone.querySelector('.popup__features').textContent = data.offer.features;
+  clone.querySelector('.popup__description').textContent = data.offer.description;
+  clone.querySelector('.popup__photos').img.src.textContent = data.offer.photos;
+
+  return clone;
+}
+
+createCard(similarArray[0]); //data
+
+
+//отображение карточки
+ function renderCards (obj) {
+   const card = createCard(obj);
+   map.insertBefore(card, mapFilter);
+ }
+
+
+function typeToText (type) {
+  switch(type)  {
+    case 'flat': return 'Квартира';
+    case 'bungalow': return 'Бунгало';
+    case 'house': return 'Дом';
+    case 'palace': return 'Дворец';
+  }
+}
+// return typeToText(similarArray[0]);
+
+
+// // заполнить данными  1 шаблон
 // var renderCards = function () {}
   // document.querySelectorAll('.popup__')
   //for (var i = 0; i < similarArray.length; i++) {
     //clone(templateCard[i], similarArray[i]);
   //}
-  document.querySelector('.popup__title') = similarArray.offer.title;
-  document.querySelector('.popup__text--adress') = similarArray.offer.address;
-  document.querySelector('.popup__text--price') = similarArray.offer.price + '₽/ночь.';
-  document.querySelector('.popup__type') = similarArray.offerType //связать значения ключей со значениями?
-  document.querySelector('.popup__text--capacity') = similarArray.offer.rooms + 'комнаты для ' + similarArray.offer.guests + 'гостей';
-  document.querySelector('.popup__text--time') = 'заезд после ' + similarArray.offer.checkin + 'выезд до ' + similarArray.offer.checkout;
-  document.querySelector('.popup__features') = similarArray.offer.features;
-  document.querySelector('.popup__description') = similarArray.offer.description;
-  document.querySelector('.popup__photos') = similarArray.offer.photos; //Каждая из строк массива photos должна записываться как src соответствующего изображени
+  // document.querySelector('.popup__title') = similarArray.offer.title;
+  // document.querySelector('.popup__text--adress') = similarArray.offer.address;
+  // document.querySelector('.popup__text--price') = similarArray.offer.price + '₽/ночь.';
+  // document.querySelector('.popup__type') = similarArray.offerType //связать значения ключей со значениями?
+  // document.querySelector('.popup__text--capacity') = similarArray.offer.rooms + 'комнаты для ' + similarArray.offer.guests + 'гостей';
+  // document.querySelector('.popup__text--time') = 'заезд после ' + similarArray.offer.checkin + 'выезд до ' + similarArray.offer.checkout;
+  // document.querySelector('.popup__features') = similarArray.offer.features;
+  // document.querySelector('.popup__description') = similarArray.offer.description;
+  // document.querySelector('.popup__photos') = similarArray.offer.photos; //Каждая из строк массива photos должна записываться как src соответствующего изображени
   //Замените src у аватарки пользователя — изображения, которое записано в .popup__avatar — на значения поля author.avatar отрисовываемого объекта.
 
 
