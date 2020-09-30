@@ -32,11 +32,11 @@ function generateSimilarObject(photoIndex) {
   const photoEndIndex = getRandomInt(0, photos.length - 1);
 
   return {
-    "author": {
-      "avatar": "img/avatars/user0" + photoId + ".png"
+    "author": { //объект
+      "avatar": "img/avatars/user0" + photoId + ".png" //ключ: значение
     },
     "offer": {
-      "title": "Кексодом", // строка, заголовок предложения
+      "title": "Кексодом",
       "address": locationX + ", " + locationY, // строка, адрес предложения. Для простоты пусть пока представляет собой запись вида "{{location.x}}, {{location.y}}", например, "600, 350"
       "price": getRandomInt(1000, 50000), // число, стоимость
       "type": offerType[offerTypeId], // строка с одним из четырёх фиксированных значений: palace, flat, house или bungalow
@@ -68,6 +68,7 @@ function generateSimilarArray() {
 const mapPins = document.querySelector('.map__pins');
 const template = document.querySelector('#pin').content.querySelector('button');
 
+// наполняет пины
 function fillPins(inputSimilarArray) {
 
   const fragment = document.createDocumentFragment();
@@ -76,10 +77,13 @@ function fillPins(inputSimilarArray) {
 
     const pinElement = createPin(inputSimilarArray[i]);
     fragment.appendChild(pinElement);
+    // console.log(pinElement);
+    // debugger;
   }
   mapPins.appendChild(fragment);
 }
 
+//отображает пины
 function createPin(obj) {
   let clone = template.cloneNode(true);
   clone.style.left = obj.location.x + 'px';
@@ -91,8 +95,27 @@ function createPin(obj) {
 
 const mapActive = document.querySelector('.map');
 mapActive.classList.remove('map--faded');
-
-
 const similarArray = generateSimilarArray();
 fillPins(similarArray);
 
+
+// // заполнить данными шаблон
+const templateCard = document.querySelector('#card').content.querySelector('article');
+// var renderCards = function () {}
+  // document.querySelectorAll('.popup__')
+  //for (var i = 0; i < similarArray.length; i++) {
+    //clone(templateCard[i], similarArray[i]);
+  //}
+  document.querySelector('.popup__title') = similarArray.offer.title;
+  document.querySelector('.popup__text--adress') = similarArray.offer.address;
+  document.querySelector('.popup__text--price') = similarArray.offer.price + '₽/ночь.';
+  document.querySelector('.popup__type') = similarArray.offerType //связать значения ключей со значениями?
+  document.querySelector('.popup__text--capacity') = similarArray.offer.rooms + 'комнаты для ' + similarArray.offer.guests + 'гостей';
+  document.querySelector('.popup__text--time') = 'заезд после ' + similarArray.offer.checkin + 'выезд до ' + similarArray.offer.checkout;
+  document.querySelector('.popup__features') = similarArray.offer.features;
+  document.querySelector('.popup__description') = similarArray.offer.description;
+  document.querySelector('.popup__photos') = similarArray.offer.photos; //Каждая из строк массива photos должна записываться как src соответствующего изображени
+  //Замените src у аватарки пользователя — изображения, которое записано в .popup__avatar — на значения поля author.avatar отрисовываемого объекта.
+
+
+// отобразить на странице function () {}
