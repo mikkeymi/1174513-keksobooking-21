@@ -11,25 +11,26 @@ function generateSimilarObject(photoIndex) {
 
   const photoId = photoIndex;
 
+
   const offerType = ["palace", "flat", "house", "bungalow"];
-  const offerTypeId = getRandomInt(offerType.length - 1);
+  const offerTypeId = getRandomInt(0, offerType.length);
 
   const locationX = getRandomInt(20, 980);
   const locationY = getRandomInt(130, 630);
 
   const times = ["12:00", "13:00", "14:00"];
-  const checkinTimeId = getRandomInt(0, times.length - 1);
+  const checkinTimeId = getRandomInt(0, times.length);
   const checkoutTimeId = getRandomInt(0, times.length - 1);
 
   const features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
-  const featuresEndIndex = getRandomInt(0, features.length - 1);
+  const featuresEndIndex = getRandomInt(0, features.length);
 
   const photos = [
     "http://o0.github.io/assets/images/tokyo/hotel1.jpg",
     "http://o0.github.io/assets/images/tokyo/hotel2.jpg",
     "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
   ];
-  const photoEndIndex = getRandomInt(0, photos.length - 1);
+  const photoEndIndex = getRandomInt(0, photos.length);
 
   return {
     "author": { //объект
@@ -101,22 +102,55 @@ fillPins(similarArray);
 const map = document.querySelector('.map');
 const mapFilter = document.querySelector('.map__filters-container');
 const templateCard = document.querySelector('#card').content.querySelector('article');
+const photoTemplate = templateCard.querySelector('.popup__photo');
+const featursTemplate = templateCard.querySelector('.popup__feature');
+
 //наполнение карточки
 function createCard(data) {
   let clone = templateCard.cloneNode(true);
-  clone.querySelector('.popup__avatar').src.textContent = data.author.avatar;
+  clone.querySelector('.popup__avatar').src = data.author.avatar;
   clone.querySelector('.popup__title').textContent = data.offer.title;
   clone.querySelector('.popup__text--address').textContent = data.offer.address;
-  clone.querySelector('popup__text--price').textContent = data.offer.price + '₽/ночь.';
-  clone.querySelector('.popup__type').textContent = typeToText(similarArray[data.offer.type]); //?
-  clone.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + 'гостей';
+  clone.querySelector('.popup__text--price').textContent = data.offer.price + '₽/ночь.';
+  clone.querySelector('.popup__type').textContent = typeToText(data.offer.type);
+  clone.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
   clone.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
-  clone.querySelector('.popup__features').textContent = data.offer.features;
   clone.querySelector('.popup__description').textContent = data.offer.description;
-  clone.querySelector('.popup__photos').img.src.textContent = data.offer.photos;
+
+  clone.querySelector('.popup__features').textContent = data.offer.features;
+
+  // свзять массив с разметкой
+    // if (data.offer.features.length === document.querySelector('.popup__feature--wifi')) {
+    //   clone.querySelector('.popup__feature--wifi');
+
+
+    // }
+  // debugger;
+
+
+// все фотографии из списка
+if (data.offer.photos.length > 0) {
+  const photosList = document.createDocumentFragment();
+
+  for (let i = 0; i < data.offer.photos.length; i++) {
+    const photoTemplateClone = photoTemplate.cloneNode(true);
+    photoTemplateClone.src = data.offer.photos[i];
+
+    photosList.appendChild(photoTemplateClone);
+  }
+
+  // как правильно удалить первого ребенка?
+
+  clone.querySelector('.popup__photos').removeChild(clone.querySelector('.popup__photo'))
+  clone.querySelector('.popup__photos').appendChild(photosList);
+} else {
+  clone.querySelector('.popup__photos').remove()
+  }
 
   return clone;
-}
+  }
+
+
 
 createCard(similarArray[0]); //data
 
@@ -126,6 +160,7 @@ createCard(similarArray[0]); //data
    const card = createCard(obj);
    map.insertBefore(card, mapFilter);
  }
+ renderCards(similarArray[0])
 
 
 function typeToText (type) {
@@ -138,23 +173,3 @@ function typeToText (type) {
 }
 // return typeToText(similarArray[0]);
 
-
-// // заполнить данными  1 шаблон
-// var renderCards = function () {}
-  // document.querySelectorAll('.popup__')
-  //for (var i = 0; i < similarArray.length; i++) {
-    //clone(templateCard[i], similarArray[i]);
-  //}
-  // document.querySelector('.popup__title') = similarArray.offer.title;
-  // document.querySelector('.popup__text--adress') = similarArray.offer.address;
-  // document.querySelector('.popup__text--price') = similarArray.offer.price + '₽/ночь.';
-  // document.querySelector('.popup__type') = similarArray.offerType //связать значения ключей со значениями?
-  // document.querySelector('.popup__text--capacity') = similarArray.offer.rooms + 'комнаты для ' + similarArray.offer.guests + 'гостей';
-  // document.querySelector('.popup__text--time') = 'заезд после ' + similarArray.offer.checkin + 'выезд до ' + similarArray.offer.checkout;
-  // document.querySelector('.popup__features') = similarArray.offer.features;
-  // document.querySelector('.popup__description') = similarArray.offer.description;
-  // document.querySelector('.popup__photos') = similarArray.offer.photos; //Каждая из строк массива photos должна записываться как src соответствующего изображени
-  //Замените src у аватарки пользователя — изображения, которое записано в .popup__avatar — на значения поля author.avatar отрисовываемого объекта.
-
-
-// отобразить на странице function () {}
