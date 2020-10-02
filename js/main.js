@@ -6,7 +6,6 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 function generateSimilarObject(photoIndex) {
 
   const photoId = photoIndex;
@@ -33,8 +32,8 @@ function generateSimilarObject(photoIndex) {
   const photoEndIndex = getRandomInt(0, photos.length);
 
   return {
-    "author": { //объект
-      "avatar": "img/avatars/user0" + photoId + ".png" //ключ: значение
+    "author": { //  объект
+      "avatar": "img/avatars/user0" + photoId + ".png" //  ключ: значение
     },
     "offer": {
       "title": "Кексодом",
@@ -78,13 +77,11 @@ function fillPins(inputSimilarArray) {
 
     const pinElement = createPin(inputSimilarArray[i]);
     fragment.appendChild(pinElement);
-    // console.log(pinElement);
-    // debugger;
   }
   mapPins.appendChild(fragment);
 }
 
-//отображает пины
+//  отображает пины
 function createPin(obj) {
   let clone = template.cloneNode(true);
   clone.style.left = obj.location.x + 'px';
@@ -94,8 +91,6 @@ function createPin(obj) {
   return clone;
 }
 
-const mapActive = document.querySelector('.map');
-mapActive.classList.remove('map--faded');
 const similarArray = generateSimilarArray();
 fillPins(similarArray);
 
@@ -103,9 +98,8 @@ const map = document.querySelector('.map');
 const mapFilter = document.querySelector('.map__filters-container');
 const templateCard = document.querySelector('#card').content.querySelector('article');
 const photoTemplate = templateCard.querySelector('.popup__photo');
-const featursTemplate = templateCard.querySelector('.popup__feature');
 
-//наполнение карточки
+//  наполнение карточки
 function createCard(data) {
   let clone = templateCard.cloneNode(true);
   clone.querySelector('.popup__avatar').src = data.author.avatar;
@@ -116,30 +110,18 @@ function createCard(data) {
   clone.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
   clone.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
   clone.querySelector('.popup__description').textContent = data.offer.description;
-  // clone.querySelector('.popup__features').textContent = '';
-  // clone.querySelector('.popup__features').textContent = data.offer.features;
+  clone.querySelector('.popup__features').innerHTML = '';
+  const photosList = clone.querySelector('.popup__photos');
 
   // отображать разметку в зависимости от свойства
-  let featuresList = data.offer.features;
-  console.log(featuresList)
+  let featuresList = clone.querySelector('.popup__features');
 
-  for (let i = 0; i < clone.querySelector('.popup__features').children.length; i++) {
-    console.log(clone.querySelector('.popup__features').children[i]);
-
-    for (let j = 0; i < data.offer.features.length; i++) {
-
-    }
-
-    // const pheaturesList = document.createDocumentFragment();
+  for (let i = 0; i < data.offer.features.length; i++) {
+    const feature = data.offer.features[i];
+    const stringFeature = '<li class="popup__feature popup__feature--' + feature + '"></li>';
+    featuresList.insertAdjacentHTML('beforeend', stringFeature);
   }
-
-
-  // debugger;
-
-
-// все фотографии из списка
-if (data.offer.photos.length > 0) {
-  const photosList = document.createDocumentFragment();
+  photosList.innerHTML = '';
 
   for (let i = 0; i < data.offer.photos.length; i++) {
     const photoTemplateClone = photoTemplate.cloneNode(true);
@@ -147,35 +129,28 @@ if (data.offer.photos.length > 0) {
 
     photosList.appendChild(photoTemplateClone);
   }
-
-  // как правильно удалить первого ребенка?
-
-  clone.querySelector('.popup__photos').removeChild(clone.querySelector('.popup__photo'))
-  clone.querySelector('.popup__photos').appendChild(photosList);
-} else {
-  clone.querySelector('.popup__photos').remove()
-  }
-
   return clone;
-  }
-createCard(similarArray[0]); //data
+}
+createCard(similarArray[0]);
 
+//  отображение карточки
+function renderCards(obj) {
+  const card = createCard(obj);
+  map.insertBefore(card, mapFilter);
+}
 
-//отображение карточки
- function renderCards (obj) {
-   const card = createCard(obj);
-   map.insertBefore(card, mapFilter);
- }
- renderCards(similarArray[0])
+renderCards(similarArray[0]);
 
-
-function typeToText (type) {
-  switch(type)  {
+function typeToText(type) {
+  switch (type) {
     case 'flat': return 'Квартира';
     case 'bungalow': return 'Бунгало';
     case 'house': return 'Дом';
     case 'palace': return 'Дворец';
   }
+  return typeToText;
 }
-// return typeToText(similarArray[0]);
 
+//  отображение карты
+const mapActive = document.querySelector('.map');
+mapActive.classList.remove('map--faded');
