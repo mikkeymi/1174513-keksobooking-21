@@ -116,15 +116,24 @@ function createCard(data) {
   clone.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
   clone.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ' выезд до ' + data.offer.checkout;
   clone.querySelector('.popup__description').textContent = data.offer.description;
+  // clone.querySelector('.popup__features').textContent = '';
+  // clone.querySelector('.popup__features').textContent = data.offer.features;
 
-  clone.querySelector('.popup__features').textContent = data.offer.features;
+  // отображать разметку в зависимости от свойства
+  let featuresList = data.offer.features;
+  console.log(featuresList)
 
-  // свзять массив с разметкой
-    // if (data.offer.features.length === document.querySelector('.popup__feature--wifi')) {
-    //   clone.querySelector('.popup__feature--wifi');
+  for (let i = 0; i < clone.querySelector('.popup__features').children.length; i++) {
+    console.log(clone.querySelector('.popup__features').children[i]);
+
+    for (let j = 0; i < data.offer.features.length; i++) {
+
+    }
+
+    // const pheaturesList = document.createDocumentFragment();
+  }
 
 
-    // }
   // debugger;
 
 
@@ -149,9 +158,6 @@ if (data.offer.photos.length > 0) {
 
   return clone;
   }
-
-
-
 createCard(similarArray[0]); //data
 
 
