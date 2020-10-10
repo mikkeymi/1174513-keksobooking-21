@@ -131,7 +131,7 @@ function createCard(data) {
   }
   return clone;
 }
-createCard(similarArray[0]);
+// createCard(similarArray[0]);
 
 //  отображение карточки
 function renderCards(obj) {
@@ -151,6 +151,71 @@ function typeToText(type) {
   return typeToText;
 }
 
-//  отображение карты
+// неактивное состояние
+//  1)отображение карты
 const mapActive = document.querySelector('.map');
-mapActive.classList.remove('map--faded');
+mapActive.classList.add('map--faded');
+const formActives = document.querySelector('.ad-form');
+formActives.classList.add('ad-form--disabled');
+const formDisabledFile = document.querySelector('.ad-form-header');
+formDisabledFile.setAttribute('disabled', 'disabled');
+// const formDisabled = document.querySelector('.ad-form__element');
+// formDisabled.setAttribute('disabled', 'disabled');  //как выбрать все элементы по классу
+const mapFilters = document.querySelector('.map__filters');
+mapFilters.setAttribute('disabled', 'disabled');
+
+const mainMapPin = document.querySelector('.map__pin--main');
+const mapActive = document.querySelector('.map');
+// делать доступной форму
+// mainMapPin.addEventListener('mousedown', function(evt) {
+//   if () {
+//   evt.preventDefault();
+//   mapActives.classList.remove('map--faded');
+//   formActive.classList.remove('ad-form--disabled');
+//   formDisabledFile.remove.Attribute('disabled', 'disabled');
+//   mapFilters.removeAttribute('disabled', 'disabled');
+//   }
+// }
+
+// при первом клике мыши на пин
+// const buttonPressed = instanceOfMouseEvent.button
+// var whichButton = function (e) {
+//   // Handle different event models
+//   var e = e || window.event;
+//   var btnCode =
+
+//   if ('object' === typeof e) {
+//       btnCode = e.button;
+
+//       switch (btnCode) {
+//           case 0:
+//               console.log('Нажата левая кнопка.');
+//           break;
+//     
+//   }}
+// }
+//3.3 тип жилья влияет на цену (minlength и placeholder)
+
+
+//3.4 ручное редактирование адреса запрещено
+const addressDisabled = document.querySelector('.ad-form__label');
+addressDisabled.setAttribute('disabled', 'disabled');
+
+
+//3.5 cинхронизировать поля  input
+document.querySelector('form').onchange = function(e) {
+  this.timein.value = e.target.value
+  this.timeout.value = e.target.value
+}
+
+//3.6 синхронизировать комнаты и места и отключить редактирвание мест
+document.querySelector('.')
+function syncAppart(value) {
+  switch (value) {
+    case '1': return '1';
+    case '2': return '2' || '1';
+    case '3': return '3' || '2' || '1';
+    case '100': return '0';
+  }
+  return syncAppart;
+}
