@@ -152,70 +152,121 @@ function typeToText(type) {
 }
 
 // неактивное состояние
-//  1)отображение карты
-const mapActive = document.querySelector('.map');
-mapActive.classList.add('map--faded');
-const formActives = document.querySelector('.ad-form');
-formActives.classList.add('ad-form--disabled');
-const formDisabledFile = document.querySelector('.ad-form-header');
-formDisabledFile.setAttribute('disabled', 'disabled');
-// const formDisabled = document.querySelector('.ad-form__element');
-// formDisabled.setAttribute('disabled', 'disabled');  //как выбрать все элементы по классу
 const mapFilters = document.querySelector('.map__filters');
-mapFilters.setAttribute('disabled', 'disabled');
-
-const mainMapPin = document.querySelector('.map__pin--main');
+const selectsOfFilter = mapFilters.querySelectorAll('select');
 const mapActive = document.querySelector('.map');
-// делать доступной форму
-// mainMapPin.addEventListener('mousedown', function(evt) {
-//   if () {
-//   evt.preventDefault();
-//   mapActives.classList.remove('map--faded');
-//   formActive.classList.remove('ad-form--disabled');
-//   formDisabledFile.remove.Attribute('disabled', 'disabled');
-//   mapFilters.removeAttribute('disabled', 'disabled');
-//   }
-// }
+const formActives = document.querySelector('.ad-form');
+const formDisabledFile = document.querySelector('.ad-form-header');
+const formDisabled = document.querySelectorAll('.ad-form__element');
+const mainMapPin = document.querySelector('.map__pin--main');
 
-// при первом клике мыши на пин
-// const buttonPressed = instanceOfMouseEvent.button
-// var whichButton = function (e) {
-//   // Handle different event models
-//   var e = e || window.event;
-//   var btnCode =
 
-//   if ('object' === typeof e) {
-//       btnCode = e.button;
+const unActivatePage = function() {
+  mapActive.classList.add('map--faded');
+  formActives.classList.add('ad-form--disabled');
+  formDisabledFile.setAttribute('disabled', 'disabled');
 
-//       switch (btnCode) {
-//           case 0:
-//               console.log('Нажата левая кнопка.');
-//           break;
-//     
-//   }}
-// }
+  formDisabled.forEach(function(element){
+    element.setAttribute('disabled', 'disabled');
+  })
+
+  selectsOfFilter.forEach(function(element){
+    element.setAttribute('disabled', 'disabled');
+  })
+}
+unActivatePage();
+
+const activatePage = function() {
+  mapActive.classList.remove('map--faded');
+  formActives.classList.remove('ad-form--disabled');
+  formDisabledFile.removeAttribute('disabled', 'disabled');
+  mapFilters.removeAttribute('disabled', 'disabled');
+
+  formDisabled.forEach(function(element){
+    element.removeAttribute('disabled');
+  })
+
+  selectsOfFilter.forEach(function(element){
+    element.removeAttribute('disabled');
+  })
+}
+
+mainMapPin.addEventListener('mousedown', function(evt) {
+  if (evt.buttons === 1) {
+    activatePage();
+  }
+})
+
 //3.3 тип жилья влияет на цену (minlength и placeholder)
+const roomType = formActives.querySelector('#type');
+const roomPrice = formActives.querySelector('#price');
+
+roomType.addEventListener('change', function(evt) {
+  checkRoomType();
+})
+
+const checkRoomType = function() {
+  let checkType = false;
+    // debugger;
+    switch (roomType.value) {
+      case 'bungalow': checkType = (roomPrice.setAttribute('minlength', 0)), roomPrice.placeholder = 0; break;
+      case 'flat': checkType = (roomPrice.setAttribute('minlength', 1000)), roomPrice.placeholder = 1000; break;
+      case 'house': checkType = (roomPrice.setAttribute('minlength', 5000)), roomPrice.placeholder =5000; break;
+      case 'palace': checkType = (roomPrice.setAttribute('minlength', 10000)), roomPrice.placeholder =10000; break;
+    }
+    if (checkType === false) {
+      roomPrice.setCustomValidity('не верно указана цена'); // не работает🙇🏿‍♂️
+    }
+    else {
+      roomPrice.setCustomValidity('');
+    }
+}
+// checkRoomType()
 
 
-//3.4 ручное редактирование адреса запрещено
+//3.4 ручное редактирование адреса запрещено и адрес заполняется автоматически
 const addressDisabled = document.querySelector('.ad-form__label');
 addressDisabled.setAttribute('disabled', 'disabled');
 
 
 //3.5 cинхронизировать поля  input
-document.querySelector('form').onchange = function(e) {
-  this.timein.value = e.target.value
-  this.timeout.value = e.target.value
-}
+const timeInElement = formActives.querySelector('#timein');
+const timeOutElement = formActives.querySelector('#timeout');
 
-//3.6 синхронизировать комнаты и места и отключить редактирвание мест
-document.querySelector('.')
-function syncAppart(value) {
-  switch (value) {
-    case '1': return '1';
-    case '2': return '2' || '1';
-    case '3': return '3' || '2' || '1';
-    case '100': return '0';
-  }
-  return syncAppart;
+timeInElement.addEventListener('change', function(evt) {
+  timeOutElement.value = timeInElement.value;
+})
+
+timeOutElement.addEventListener('change', function(evt) {
+  timeInElement.value = timeOutElement.value;
+})
+
+const roomNumbers = formActives.querySelector('#room_number');
+const capacityElement = formActives.querySelector('#capacity');
+
+roomNumbers.addEventListener('change', function(evt) {
+    checkCapacity()
+} )
+
+capacityElement.addEventListener('change', function(evt) {
+  checkCapacity()
+} )
+
+const checkCapacity = function () {
+  let isCheck = false;
+  const capacity = capacityElement.value
+  // debugger;
+    switch (roomNumbers.value) {
+        case '1': isCheck = (capacity === '1'); break;
+        case '2': isCheck = (capacity === '1') || (capacity === '2'); break;
+        case '3': isCheck = (capacity === '1') || (capacity === '2') || (capacity === '3'); break;
+        case '100': isCheck = (capacity === '0'); break;
+    }
+
+    if (isCheck === false) {
+      capacityElement.setCustomValidity('выберите корректные значения'); //1 комната — для 1 гостя 2 комнаты — для 2 гостей или для 1 гостя 3 комнаты — для 3 гостей, для 2 гостей или для 1 гостя,100 комнат — «не для гостей.
+    }
+    else {
+      capacityElement.setCustomValidity('');
+    }
 }
