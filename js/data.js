@@ -1,16 +1,15 @@
 'use strict';
 
-//1  - создание данных data.js
-function getRandomInt(min, max) {
+(function() {
+
+  function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
   function generateSimilarObject(photoIndex) {
 
     const photoId = photoIndex;
-
 
     const offerType = ["palace", "flat", "house", "bungalow"];
     const offerTypeId = getRandomInt(0, offerType.length);
@@ -56,7 +55,6 @@ function getRandomInt(min, max) {
     };
   }
 
-
   function generateSimilarArray() {
     let returnArray = [];
 
@@ -65,4 +63,12 @@ function getRandomInt(min, max) {
     }
     return returnArray;
   }
+
+  window.data={
+    generate: generateSimilarArray
+  };
+
+})();
+
+
 

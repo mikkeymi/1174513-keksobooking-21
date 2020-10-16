@@ -1,5 +1,5 @@
 'use strict';
-
+(function() {
 //  наполнение карточки
 function createCard(data) {
   let clone = templateCard.cloneNode(true);
@@ -39,7 +39,7 @@ function renderCards(obj) {
   map.insertBefore(card, mapFilter);
 }
 
-renderCards(similarArray[0]);
+renderCards(window.data.generate()[0]);
 
 function typeToText(type) {
   switch (type) {
@@ -50,3 +50,11 @@ function typeToText(type) {
   }
   return typeToText;
 }
+
+ window.card={
+    createCards: createCard,
+     renderCards: renderCards
+  };
+
+
+})();
