@@ -1,7 +1,7 @@
 'use strict';
 
-(function() {
-// неактивное состояние
+(function () {
+  // неактивное состояние
   const mapFilters = document.querySelector('.map__filters');
   const selectsOfFilter = mapFilters.querySelectorAll('select');
   const mapActive = document.querySelector('.map');
@@ -109,9 +109,9 @@
     }
   };
 
-   window.form={
+  window.form = {
     unActivatePage: unActivatePage,
-    activatePage :activatePage
+    activatePage: activatePage
   };
 
 

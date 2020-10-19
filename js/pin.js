@@ -1,5 +1,5 @@
 'use strict';
-(function() {
+(function () {
 
   const mapPins = document.querySelector('.map__pins');
   const template = document.querySelector('#pin').content.querySelector('button');
@@ -30,15 +30,9 @@
   const similarArray = window.data.generate();
   fillPins(similarArray);
 
-  const map = document.querySelector('.map');
-  const mapFilter = document.querySelector('.map__filters-container');
-  const templateCard = document.querySelector('#card').content.querySelector('article');
-  const photoTemplate = templateCard.querySelector('.popup__photo');
-
-
   // перетаскивание метки
-  //Для удобства пользователей значение Y-координаты адреса должно быть ограничено интервалом от 130 до 630.
-  //Значение X-координаты адреса должно быть ограничено размерами блока, в котором перемещается метка.
+  // Для удобства пользователей значение Y-координаты адреса должно быть ограничено интервалом от 130 до 630.
+  // Значение X-координаты адреса должно быть ограничено размерами блока, в котором перемещается метка.
   let pinHandle = document.querySelector('.map__pin--main');
 
 
@@ -67,22 +61,21 @@
       pinHandle.style.left = (pinHandle.offsetLeft - shift.x) + 'px';
     };
 
-      var onMouseUp = function (upEvt) {
-        upEvt.preventDefault();
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
 
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-      };
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
 
   });
 
-  window.pin={
-    // similarArray: similarArray,
-    createPin:createPin
+  window.pin = {
+    similarArray: similarArray,
+    createPin: createPin
   };
 
 })();
-

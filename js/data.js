@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -64,11 +64,8 @@
     return returnArray;
   }
 
-  window.data={
+  window.data = {
     generate: generateSimilarArray
   };
 
 })();
-
-
-
