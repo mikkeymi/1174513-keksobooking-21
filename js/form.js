@@ -2,8 +2,8 @@
 
 (function () {
   // неактивное состояние
-  const mapFilters = document.querySelector('.map__filters');
-  const selectsOfFilter = mapFilters.querySelectorAll('select');
+  // const mapFilters = document.querySelector('.map__filters');
+  // const selectsOfFilter = document.querySelectorAll('select');
   const mapActive = document.querySelector('.map');
   const formActives = document.querySelector('.ad-form');
   const formDisabledFile = document.querySelector('.ad-form-header');
@@ -12,7 +12,7 @@
 
 
   const unActivatePage = function () {
-    mapActive.classList.add('map--faded');
+    // mapActive.classList.add('map--faded');
     formActives.classList.add('ad-form--disabled');
     formDisabledFile.setAttribute('disabled', 'disabled');
 
@@ -20,32 +20,32 @@
       element.setAttribute('disabled', 'disabled');
     });
 
-    selectsOfFilter.forEach(function (element) {
-      element.setAttribute('disabled', 'disabled');
-    });
+    // selectsOfFilter.forEach(function (element) {
+    //   element.setAttribute('disabled', 'disabled');
+    // });
   };
   unActivatePage();
 
   const activatePage = function () {
-    mapActive.classList.remove('map--faded');
+    // mapActive.classList.remove('map--faded');
     formActives.classList.remove('ad-form--disabled');
     formDisabledFile.removeAttribute('disabled', 'disabled');
-    mapFilters.removeAttribute('disabled', 'disabled');
+    // mapFilters.removeAttribute('disabled', 'disabled');
 
     formDisabled.forEach(function (element) {
       element.removeAttribute('disabled');
     });
 
-    selectsOfFilter.forEach(function (element) {
-      element.removeAttribute('disabled');
-    });
+    // selectsOfFilter.forEach(function (element) {
+    //   element.removeAttribute('disabled');
+    // });
   };
 
-  mainMapPin.addEventListener('mousedown', function (evt) {
-    if (evt.buttons === 1) {
-      activatePage();
-    }
-  });
+  // mainMapPin.addEventListener('mousedown', function (evt) {
+  //   if (evt.buttons === 1) {
+  //     activatePage();
+  //   }
+  // });
 
   // 3.3 тип жилья влияет на цену (minlength и placeholder)
   const roomType = formActives.querySelector('#type');
@@ -113,6 +113,4 @@
     unActivatePage: unActivatePage,
     activatePage: activatePage
   };
-
-
 })();

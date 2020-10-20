@@ -57,9 +57,4 @@
     return typeToText;
   }
 
-  window.card = {
-    createCards: createCard,
-    renderCards: renderCards
-  };
-
 })();
