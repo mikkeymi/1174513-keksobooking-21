@@ -13,26 +13,25 @@
     selectsOfFilter.forEach(function (element) {
       element.removeAttribute('disabled');
     });
-  }
+  };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
     if (evt.buttons === 1) {
-      activatePage();
+      window.main.activatePage();
     }
   });
 
-const deactivateMap = function () {
-  mapActive.classList.add('map--faded');
+  const deactivateMap = function () {
+    mapActive.classList.add('map--faded');
 
-  selectsOfFilter.forEach(function (element) {
-    element.setAttribute('disabled', 'disabled');
-  });
-}
+    selectsOfFilter.forEach(function (element) {
+      element.setAttribute('disabled', 'disabled');
+    });
+  };
 
-window.map = {
-  activate: activateMap,
-  deactivate: deactivateMap
-};
-
-}) ();
+  window.map = {
+    activate: activateMap,
+    deactivate: deactivateMap
+  };
+})();
 

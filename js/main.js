@@ -1,15 +1,19 @@
 'use strict';
 
-(function() {
-  const activatePage = function() {
+(function () {
+  const activatePage = function () {
     window.map.activate();
-    window.Form.activate();
+    window.form.activate();
+  };
 
-    const unActivatePage = function () {
-      window.map.deactivate();
-      window.form.deactivate();
-    }
-  }
+  const unActivatePage = function () {
+    window.map.deactivate();
+    window.form.deactivate();
+  };
 
+  window.main = {
+    activatePage: activatePage,
+    unActivatePage: unActivatePage
+  };
 
 })();

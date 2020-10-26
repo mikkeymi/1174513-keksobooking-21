@@ -2,13 +2,9 @@
 
 (function () {
   // неактивное состояние
-  // const mapFilters = document.querySelector('.map__filters');
-  // const selectsOfFilter = document.querySelectorAll('select');
-  const mapActive = document.querySelector('.map');
   const formActives = document.querySelector('.ad-form');
   const formDisabledFile = document.querySelector('.ad-form-header');
   const formDisabled = document.querySelectorAll('.ad-form__element');
-  const mainMapPin = document.querySelector('.map__pin--main');
 
 
   const unActivatePage = function () {
@@ -19,10 +15,6 @@
     formDisabled.forEach(function (element) {
       element.setAttribute('disabled', 'disabled');
     });
-
-    // selectsOfFilter.forEach(function (element) {
-    //   element.setAttribute('disabled', 'disabled');
-    // });
   };
   unActivatePage();
 
@@ -35,17 +27,7 @@
     formDisabled.forEach(function (element) {
       element.removeAttribute('disabled');
     });
-
-    // selectsOfFilter.forEach(function (element) {
-    //   element.removeAttribute('disabled');
-    // });
   };
-
-  // mainMapPin.addEventListener('mousedown', function (evt) {
-  //   if (evt.buttons === 1) {
-  //     activatePage();
-  //   }
-  // });
 
   // 3.3 тип жилья влияет на цену (minlength и placeholder)
   const roomType = formActives.querySelector('#type');
@@ -111,6 +93,6 @@
 
   window.form = {
     unActivatePage: unActivatePage,
-    activatePage: activatePage
+    activate: activatePage
   };
 })();
