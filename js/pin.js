@@ -27,8 +27,8 @@
     return clone;
   }
 
-  const similarArray = window.data.generate();
-  fillPins(similarArray);
+  // const similarArray = window.data.generate();
+  // fillPins(similarArray);
 
   // перетаскивание метки
   // Для удобства пользователей значение Y-координаты адреса должно быть ограничено интервалом от 130 до 630.
@@ -74,8 +74,9 @@
   });
 
   window.pin = {
-    similarArray: similarArray,
-    createPin: createPin
+    // similarArray: similarArray,
+    createPin: createPin,
+    fillPins: fillPins
   };
 
 })();
