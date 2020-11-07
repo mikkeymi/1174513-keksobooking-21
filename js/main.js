@@ -17,13 +17,15 @@
     unActivatePage: unActivatePage
   };
 
+
   const onLoadError = function (text) {
     console.log(text);
+    let text = console.log("Данные не получены");
+  };
 
-  }
   const onSuccess = function (data) {
-    console.log(data);
+    // console.log(data);
     window.pin.fillPins(data);
-  }
+  };
 
 })();
